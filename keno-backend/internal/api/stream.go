@@ -4,6 +4,7 @@ import (
 	"keno/internal/engine"
 	"keno/internal/models"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
@@ -59,6 +60,9 @@ func GameStreamer(ctx *gin.Context) {
 				log.WithError(err).Error("Error writing game to websocket")
 				return
 			}
+		case <-time.After(5 * time.Second):
+			// Send a ping to keep the connection alive
+			ws.WriteMessage(websocket.PingMessage, []byte{})
 		case <-ctx.Done():
 			return
 		}
