@@ -5,8 +5,8 @@
   </template>
   
   <script setup>
-    import { useGameStore } from '@/stores/game';
-    import { GameGrid } from '@/services/game.js';
+    import { useGameStore } from '@/stores/game.js';
+    import { GameGrid } from '@/models/game.js';
     import { ref, onMounted } from 'vue';
 
     const gameStore = useGameStore();

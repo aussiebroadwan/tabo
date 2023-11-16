@@ -17,6 +17,8 @@ type Card struct {
 	StartGame uint64  `json:"start_game_num"`
 	LastGame  uint64  `json:"last_game_num"`
 	PerGame   uint64  `json:"per_game"`
+
+	User string `json:"user"`
 }
 
 func (c Card) CheckCard(db *gorm.DB) uint64 {
@@ -50,7 +52,7 @@ func GetCard(db *gorm.DB, id uint64) (*Card, error) {
 	return &card, nil
 }
 
-func SubmitCard(db *gorm.DB, selection []uint8, startGame uint64, numOfGames uint8, pricePerGame uint64) (*Card, error) {
+func SubmitCard(db *gorm.DB, selection []uint8, startGame uint64, numOfGames uint8, pricePerGame uint64, user string) (*Card, error) {
 	// Sort selection
 	sort.Slice(selection, func(i, j int) bool { return selection[i] < selection[j] })
 
@@ -61,6 +63,7 @@ func SubmitCard(db *gorm.DB, selection []uint8, startGame uint64, numOfGames uin
 		StartGame: startGame,
 		LastGame:  startGame + uint64(numOfGames),
 		PerGame:   uint64(pricePerGame),
+		User:      user,
 	}
 
 	// Create the card in the database

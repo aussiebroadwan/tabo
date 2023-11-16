@@ -52,6 +52,8 @@ func PlacePicks(ctx *gin.Context) {
 		return
 	}
 
+	userId, _ := ctx.Get("user")
+
 	// Get the game engine from the context
 	gameEngine, ok := ctx.Get(engine.EngineKey)
 	if !ok {
@@ -67,6 +69,7 @@ func PlacePicks(ctx *gin.Context) {
 		gameEngine.(*engine.Engine).GetGameNumber(),
 		req.NumGames,
 		req.PricePerGame,
+		userId.(string),
 	)
 	if err != nil {
 		log.WithField("src", "api.PlacePicks").Error("Error submitting picks")
@@ -120,7 +123,6 @@ func (p PickRequest) isValid() bool {
 
 type PickResponse struct {
 	CardId    uint64 `json:"card_id"`
-	Selection []int  `json:"selection"`
 	StartGame uint64 `json:"start_game_num"`
 	LastGame  uint64 `json:"last_game_num"`
 }
@@ -128,13 +130,9 @@ type PickResponse struct {
 func cardToPickResponse(card models.Card) PickResponse {
 	resp := PickResponse{
 		CardId:    card.ID,
-		Selection: make([]int, 0),
 		StartGame: card.StartGame,
 		LastGame:  card.LastGame,
 	}
 
-	for _, num := range card.Selection {
-		resp.Selection = append(resp.Selection, int(num))
-	}
 	return resp
 }

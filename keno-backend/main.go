@@ -49,10 +49,14 @@ func launchAPI(database *gorm.DB, gameEngine *engine.Engine) {
 
 	v1 := r.Group("/api/v1")
 	{
+		// Make sure the user is authenticated
+		v1.Use(api.DiscordAuth)
+
+		// Protected API
 		v1.POST("/picks", api.PlacePicks)
 		v1.GET("/check/:card_id", api.CheckCard)
-		v1.GET("/ws", api.GameStreamer)
 	}
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/api/v1/ws", api.GameStreamer)
+	r.GET("/api/v1/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run(":8080")
 }
