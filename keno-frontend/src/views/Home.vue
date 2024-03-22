@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/auth.js';
 import KenoCanvas from '@/components/KenoCanvas.vue'
 
 const auth = useAuthStore();
-auth.checkToken("/");
+// auth.checkToken("/");
 
 </script>
 
