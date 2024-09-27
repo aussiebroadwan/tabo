@@ -1,5 +1,5 @@
 <script setup>
-import StreamerService from './services/streamer.js'
+import StreamerService from '@/services/streamer.js'
 
 
 

@@ -14,13 +14,13 @@ auth.checkToken("/");
     <div class="w-screen h-screen flex flex-col">
         <div class="m-auto">
             <KenoCanvas />
-            <div class="mx-5 flex justify-end">
+            <!-- <div class="mx-5 flex justify-end">
                 <div class="w-1/5 flex bg-[#337B3D] hover:opacity-90 cursor-pointer text-white rounded-lg text-center h-10 select-none font-semibold">
                     <p class="m-auto">
                         PLACE BET
                     </p>
                 </div>
-            </div>
+            </div> -->
             <!-- <KenoCard /> -->
         </div>
     </div>
